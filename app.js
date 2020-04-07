@@ -46,6 +46,7 @@ const ItemCtrl = (function () {
       newItem = new Item(ID, name, calories);
       // Add item object to items array
       data.items.push(newItem);
+      return newItem;
     },
 
     logData: function () {
@@ -89,6 +90,30 @@ const UICtrl = (function () {
       }
     },
 
+    addListItem: function (item) {
+      // Create li element
+      const li = document.createElement('li');
+      // Add class
+      li.className = 'collection-item';
+      // Add ID
+      li.id = `item-${item.id}`;
+      // Add HTML
+      li.innerHTML = `
+      <strong>${item.name}: </strong>
+      <em>${item.calories} Calories</em>
+      <a href="" class="secondary-content">
+        <i class="edit-item fas fa-pen"></i></a>
+      `;
+
+      // Insert item
+      document.querySelector(UISelectors.itemList).insertAdjacentElement('beforeend', li);
+    },
+
+    clearInput: function () {
+      document.querySelector(UISelectors.itemNameInput).value = '';
+      document.querySelector(UISelectors.itemCaloriesInput).value = '';
+    },
+
     getSelectors: function () {
       return UISelectors;
     }
@@ -113,8 +138,15 @@ const App = (function (ItemCtrl, UICtrl) {
 
     // Check for name and calories
     if (input.name !== '' && input.calories !== '') {
+
       // Add Item
       const newItem = ItemCtrl.addItem(input.name, input.calories);
+
+      // Add item to UI list
+      UICtrl.addListItem(newItem);
+
+      // Clear fields
+      UICtrl.clearInput();
     }
 
     e.preventDefault();
