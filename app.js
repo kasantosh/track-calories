@@ -224,7 +224,6 @@ const UICtrl = (function () {
       document.querySelector(UISelectors.deleteBtn).style.display = 'none';
       document.querySelector(UISelectors.backBtn).style.display = 'none';
       document.querySelector(UISelectors.addBtn).style.display = 'inline';
-
     },
 
     showEditState: function () {
